@@ -5,5 +5,19 @@
     "email": "simon.c312@berkeley.edu", 
     "github_name": "simonc312", 
     "status": "enrolled", 
-    "grades": {}
+    "grades": {
+        "hw1": {
+            "note": "", 
+            "hash": "a9dff4dc039fa4d951287e1a10b5dc3d6a5f0e5a", 
+            "earned": 14, 
+            "possible": 14, 
+            "penalty": 0, 
+            "parts": {
+                "ex1": {
+                    "possible": 14, 
+                    "earned": 14
+                }
+            }
+        }
+    }
 }
