@@ -1,0 +1,153 @@
+INFO:root:(1 points) Is the weight plot correct'? is y
+INFO:root:(1 points) Is the identity line plotted? is y
+ERROR:root:(1 points) Checking Is the identity line red?
+ERROR:root:... Expecting: False
+ERROR:root:... But got:   n
+ERROR:root:(1 points) Checking Is the housing plot correct?
+ERROR:root:... Expecting: False
+ERROR:root:... But got:   n
+INFO:root:(1 points) Are the axes labeled? is y
+INFO:root:(1 points) Is the plot colored correctly? is y
+INFO:root:(1 points) Does the plot contain a legend? is y
+INFO:root:Executed R('load(\'../../instructor/assignments/hw2/hw2-tests.rda\')')
+INFO:root:(1 points) R('all.equal(OW_NHANES, sol$OW_NHANES)')[0] is True
+ERROR:root:(1 points) Checking R('all.equal(OWval, sol$OWval)')[0]
+ERROR:root:... Expecting: True
+ERROR:root:... But got:   Traceback error
+ERROR:root:Got exception:
+Traceback (most recent call last):
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/gradebook/score.py", line 180, in check
+    result = eval(command, g)
+  File "<string>", line 1, in <module>
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/__init__.py", line 246, in __call__
+    res = self.eval(p)
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/functions.py", line 166, in __call__
+    return super(SignatureTranslatedFunction, self).__call__(*args, **kwargs)
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/functions.py", line 99, in __call__
+    res = super(Function, self).__call__(*new_args, **new_kwargs)
+RRuntimeError: Error in all.equal(OWval, sol$OWval) : object 'OWval' not found
+
+ERROR:root:Traceback (most recent call last):
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/gradebook/score.py", line 180, in check
+    result = eval(command, g)
+  File "<string>", line 1, in <module>
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/__init__.py", line 246, in __call__
+    res = self.eval(p)
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/functions.py", line 166, in __call__
+    return super(SignatureTranslatedFunction, self).__call__(*args, **kwargs)
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/functions.py", line 99, in __call__
+    res = super(Function, self).__call__(*new_args, **new_kwargs)
+RRuntimeError: Error in all.equal(OWval, sol$OWval) : object 'OWval' not found
+
+Traceback (most recent call last):
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/gradebook/score.py", line 180, in check
+    result = eval(command, g)
+  File "<string>", line 1, in <module>
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/__init__.py", line 246, in __call__
+    res = self.eval(p)
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/functions.py", line 166, in __call__
+    return super(SignatureTranslatedFunction, self).__call__(*args, **kwargs)
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/functions.py", line 99, in __call__
+    res = super(Function, self).__call__(*new_args, **new_kwargs)
+RRuntimeError: Error in all.equal(OWval, sol$OWval) : object 'OWval' not found
+
+ERROR:root:(1 points) Checking R('all.equal(OW_limit, sol$OW_limit)')[0]
+ERROR:root:... Expecting: True
+ERROR:root:... But got:   Traceback error
+ERROR:root:Got exception:
+Traceback (most recent call last):
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/gradebook/score.py", line 180, in check
+    result = eval(command, g)
+  File "<string>", line 1, in <module>
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/__init__.py", line 246, in __call__
+    res = self.eval(p)
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/functions.py", line 166, in __call__
+    return super(SignatureTranslatedFunction, self).__call__(*args, **kwargs)
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/functions.py", line 99, in __call__
+    res = super(Function, self).__call__(*new_args, **new_kwargs)
+RRuntimeError: Error in all.equal(OW_limit, sol$OW_limit) : object 'OW_limit' not found
+
+ERROR:root:Traceback (most recent call last):
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/gradebook/score.py", line 180, in check
+    result = eval(command, g)
+  File "<string>", line 1, in <module>
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/__init__.py", line 246, in __call__
+    res = self.eval(p)
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/functions.py", line 166, in __call__
+    return super(SignatureTranslatedFunction, self).__call__(*args, **kwargs)
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/functions.py", line 99, in __call__
+    res = super(Function, self).__call__(*new_args, **new_kwargs)
+RRuntimeError: Error in all.equal(OW_limit, sol$OW_limit) : object 'OW_limit' not found
+
+Traceback (most recent call last):
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/gradebook/score.py", line 180, in check
+    result = eval(command, g)
+  File "<string>", line 1, in <module>
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/__init__.py", line 246, in __call__
+    res = self.eval(p)
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/functions.py", line 166, in __call__
+    return super(SignatureTranslatedFunction, self).__call__(*args, **kwargs)
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/functions.py", line 99, in __call__
+    res = super(Function, self).__call__(*new_args, **new_kwargs)
+RRuntimeError: Error in all.equal(OW_limit, sol$OW_limit) : object 'OW_limit' not found
+
+INFO:root:(1 points) R('all.equal(OW_NHANES2, sol$OW_NHANES2)')[0] is True
+ERROR:root:(1 points) Checking R('all.equal(OW_weight, sol$OW_weight)')[0]
+ERROR:root:... Expecting: True
+ERROR:root:... But got:   Traceback error
+ERROR:root:Got exception:
+Traceback (most recent call last):
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/gradebook/score.py", line 180, in check
+    result = eval(command, g)
+  File "<string>", line 1, in <module>
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/__init__.py", line 246, in __call__
+    res = self.eval(p)
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/functions.py", line 166, in __call__
+    return super(SignatureTranslatedFunction, self).__call__(*args, **kwargs)
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/functions.py", line 99, in __call__
+    res = super(Function, self).__call__(*new_args, **new_kwargs)
+RRuntimeError: Error in all.equal(OW_weight, sol$OW_weight) : 
+  object 'OW_weight' not found
+
+ERROR:root:Traceback (most recent call last):
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/gradebook/score.py", line 180, in check
+    result = eval(command, g)
+  File "<string>", line 1, in <module>
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/__init__.py", line 246, in __call__
+    res = self.eval(p)
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/functions.py", line 166, in __call__
+    return super(SignatureTranslatedFunction, self).__call__(*args, **kwargs)
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/functions.py", line 99, in __call__
+    res = super(Function, self).__call__(*new_args, **new_kwargs)
+RRuntimeError: Error in all.equal(OW_weight, sol$OW_weight) : 
+  object 'OW_weight' not found
+
+Traceback (most recent call last):
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/gradebook/score.py", line 180, in check
+    result = eval(command, g)
+  File "<string>", line 1, in <module>
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/__init__.py", line 246, in __call__
+    res = self.eval(p)
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/functions.py", line 166, in __call__
+    return super(SignatureTranslatedFunction, self).__call__(*args, **kwargs)
+  File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/functions.py", line 99, in __call__
+    res = super(Function, self).__call__(*new_args, **new_kwargs)
+RRuntimeError: Error in all.equal(OW_weight, sol$OW_weight) : 
+  object 'OW_weight' not found
+
+INFO:root:(1 points) R('all.equal(n.cities, sol$n.cities)')[0] is True
+INFO:root:(1 points) R('all.equal(n.housesale, sol$n.housesale)')[0] is True
+INFO:root:(1 points) R('all.equal(all.housing.variable, sol$all.housing.variables)')[0] is True
+ERROR:root:(1 points) Checking R('all.equal(all.housing.variable, sol$all.housing.variables.obj)')[0]
+ERROR:root:... Expecting: True
+ERROR:root:... But got:   15 string mismatches
+ERROR:root:(1 points) Checking R('all.equal(local.cities, sol$local.cities)')[0]
+ERROR:root:... Expecting: True
+ERROR:root:... But got:   2 string mismatches
+INFO:root:(1 points) R('all.equal(some.housing.variables, sol$some.housing.variables)')[0] is True
+INFO:root:(1 points) R('all.equal(BerkArea$pricePsqft, sol$BerkArea.pps)')[0] is True
+INFO:root:(1 points) R('all.equal(dim(BerkArea), dim(sol$BerkArea))')[0] is True
+INFO:root:(1 points) R('all.equal(br5, sol$br5)')[0] is True
+INFO:root:(1 points) R('all.equal(rCols, sol$rCols)')[0] is True
+INFO:root:(1 points) R('all.equal(brCols, sol$brCols)')[0] is True
+INFO:root:You got a 16 out of 22.
