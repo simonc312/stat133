@@ -15,12 +15,18 @@ load('hw4-tests.rda')
 # <truncated.vector>: the remaining values of input.vector after removing the
 # upper and lower quantiles
 
-truncate <- function(input.vector, trim) {
+truncate <- function(input.vector, trim=0) {
 
         stopifnot(0<=trim & trim<=0.5) # this line makes sure trim in [0,0.5]
 
             # your code here
-
+        if(trim == 0.5)
+          integer(0)
+        else{ 
+          lower_q = quantile(input.vector,trim)
+          upper_q = quantile(input.vector,1-trim)
+          truncated.vector = input.vector[input.vector >= lower_q & input.vector <= upper_q]
+        }
     }
 
 tryCatch(checkEquals(c(2, 3, 4), truncate(1:5, trim=0.25)), error=function(err)
@@ -47,18 +53,21 @@ tryCatch(checkIdentical(integer(0), truncate(1:6, trim=0.5)),
 
 outlierCutoff <- function(data) {
         # your code here
+        sapply(data,function(e){stopifnot(class(e) == 'numeric')})
+        outlier.cutoffs = apply(data,2,function(c){c(median(c)-1.5*IQR(c),
+                                   median(c)+1.5*IQR(c))})
 
 }
 
-tryCatch(checkIdentical(outlier.cutoff.t, outlierCutoff(ex1.test)),
-                  error=function(err) errMsg(err))
+tryCatch(checkEquals(outlier.cutoff.t, outlierCutoff(ex1.test), checkNames=F),
+         error=function(err) errMsg(err))
 
 
 # Again, suppose that you are given some dataset where all variables are numeric.
 # Assume that you are interested in removing outliers as defined in the
 # previous part
 # Implement a function "removeOutliers" that
-# 1) caclulates the number of variables (cols) for each observation (rows) in the
+# 1) calculates the number of variables (cols) for each observation (rows) in the
 #   dataset that are considered outliers
 # 2) removes any observation with more than some specified fraction of its
 #   variables as outliers. Your function should take the following arguments:
@@ -78,6 +87,18 @@ removeOutliers <- function(data, max.outlier.rate) {
         stopifnot(max.outlier.rate>=0 & max.outlier.rate<=1)
 
             # your code here
+        
+        num_outliers_matrix = apply(data,MARGIN=c(1,2),
+                                    function(row,col){
+                                      cutoffs_col = outlierCutoff(as(c,'matrix'))
+                                      
+                                        (row < cutoffs_col[1] | row > cutoffs_col[2])
+                                      )
+                                    }
+                                )
+        subset.data = sapply(data,function(obs){
+          
+          })
     }
 
 tryCatch(checkEquals(remove.outlier.t, removeOutliers(ex1.test, 0.25), ),
@@ -102,11 +123,13 @@ tryCatch(checkEquals(remove.outlier.t, removeOutliers(ex1.test, 0.25), ),
 #   matrix.
 
 meanByLevel <- function(data) {
-
-        # your code here
+  classes <- lapply(data,class)
+  level_col <- data[[names(classes[classes=="factor"])]]
+  numeric_cols <- data[names(classes[classes!="factor"])]
+  level.means = apply(numeric_cols,2,function(col){by(col,level_col,mean)})
 }
 
-tryCatch(checkIdentical(mean.by.level.t, meanByLevel(iris), checkNames=F),
+tryCatch(checkEquals(mean.by.level.t, meanByLevel(iris), checkNames=F),
          error=function(err) errMsg(err))
 
 
@@ -131,11 +154,20 @@ tryCatch(checkIdentical(mean.by.level.t, meanByLevel(iris), checkNames=F),
 #   dimensions of your return value are correct.
 
 stdLevelDiff <- function(data) {
-
-        # your code here
+        classes <- lapply(data,class)
+        level_col <- data[[names(classes[classes=="factor"])]]
+        numeric_cols <- data[names(classes[classes!="factor"])]
+        diff_mean_matrix = apply(numeric_cols,2,function(col){
+          overall_mean = mean(col)
+          overall_sd = sd(col)
+          by(col,level_col,function(x){
+            (mean(x)-overall_mean)/overall_sd}
+            )
+          })
+        
 }
 
-tryCatch(checkIdentical(std.level.diff.t, abs(stdLevelDiff(iris)), checkNames=F),
+tryCatch(checkEquals(std.level.diff.t, abs(stdLevelDiff(iris)), checkNames=F),
                   error=function(err) errMsg(err))
 
 
@@ -160,6 +192,9 @@ tryCatch(checkIdentical(std.level.diff.t, abs(stdLevelDiff(iris)), checkNames=F)
 simpleNormSim <- function(means, sim.size=50, var=1) {
 
         # your code here
+        sd_vector <- 1:length(means)
+        sd_vector[] <- sqrt(var) 
+        lapply(means,function(m){rnorm(sim.size,mean=m, sd=sd_vector)})
 }
 
 set.seed(47)
