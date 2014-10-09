@@ -78,12 +78,7 @@ testGroupsGestation <- function(data, group1.idcs, group2.idcs,
     stopifnot(!any(group1.idcs %in% group2.idcs))
 
     # your code here
-    switch(test.alternative,
-    two.sided={data[group1.idcs,] == data[group2.idcs,]},
-    less={data[group1.idcs,] < data[group2.idcs,]},
-    greater={data[group1.idcs,] > data[group2.idcs,]},
-    {print('test.alternative case not found')}
-    )
+    t.test(data$gestation[group1.idcs],data$gestation[group2.idcs],test.alternative)
 }
 
 tryCatch(checkEquals(test.groups.gestation.t$p.value,
