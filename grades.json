@@ -35,6 +35,23 @@
                     "earned": 11
                 }
             }
+        }, 
+        "hw3": {
+            "note": "", 
+            "hash": "b63d9f2f0ac5dc7821b7741f05d3771033668bd5", 
+            "earned": 21, 
+            "possible": 32, 
+            "penalty": 0, 
+            "parts": {
+                "hw3": {
+                    "possible": 16, 
+                    "earned": 9
+                }, 
+                "hw3_fig": {
+                    "possible": 16, 
+                    "earned": 12
+                }
+            }
         }
     }
 }
