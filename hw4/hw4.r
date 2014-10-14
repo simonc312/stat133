@@ -87,22 +87,16 @@ removeOutliers <- function(data, max.outlier.rate) {
         stopifnot(max.outlier.rate>=0 & max.outlier.rate<=1)
 
             # your code here
-        
+        cutoffs_col = outlierCutoff(data)
         num_outliers_matrix = apply(data,MARGIN=c(1,2),
                                     function(row,col){
-                                      cutoffs_col = outlierCutoff(as(c,'matrix'))
-                                      
-                                        (row < cutoffs_col[1] | row > cutoffs_col[2])
-                                      )
+                                        (row < cutoffs_col[1,col] | row > cutoffs_col[2,col])
                                     }
                                 )
-        subset.data = sapply(data,function(obs){
-          
-          })
     }
 
-tryCatch(checkEquals(remove.outlier.t, removeOutliers(ex1.test, 0.25), ),
-                  error=function(err) errMsg(err))
+#tryCatch(checkEquals(remove.outlier.t, removeOutliers(ex1.test, 0.25), ),
+ #                 error=function(err) errMsg(err))
 
 
 # Suppose you are given a data frame where all but one of the variables are
