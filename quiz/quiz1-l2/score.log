@@ -205,7 +205,7 @@ Traceback (most recent call last):
     res = super(Function, self).__call__(*new_args, **new_kwargs)
 RRuntimeError: Error in all.equal(bsqft.less, test$sub2) : object 'bsqft.less' not found
 
-ERROR:root:(1 points) Checking R('all.equal(bsqft.greater.price, test$sub3)')[0]
+ERROR:root:(1 points) Checking R('all.equal(rooms.greater.price, test$sub3)')[0]
 ERROR:root:... Expecting: True
 ERROR:root:... But got:   Traceback error
 ERROR:root:Got exception:
@@ -219,8 +219,8 @@ Traceback (most recent call last):
     return super(SignatureTranslatedFunction, self).__call__(*args, **kwargs)
   File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/functions.py", line 99, in __call__
     res = super(Function, self).__call__(*new_args, **new_kwargs)
-RRuntimeError: Error in all.equal(bsqft.greater.price, test$sub3) : 
-  object 'bsqft.greater.price' not found
+RRuntimeError: Error in all.equal(rooms.greater.price, test$sub3) : 
+  object 'rooms.greater.price' not found
 
 ERROR:root:Traceback (most recent call last):
   File "/Users/Karl/anaconda/lib/python2.7/site-packages/gradebook/score.py", line 180, in check
@@ -232,8 +232,8 @@ ERROR:root:Traceback (most recent call last):
     return super(SignatureTranslatedFunction, self).__call__(*args, **kwargs)
   File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/functions.py", line 99, in __call__
     res = super(Function, self).__call__(*new_args, **new_kwargs)
-RRuntimeError: Error in all.equal(bsqft.greater.price, test$sub3) : 
-  object 'bsqft.greater.price' not found
+RRuntimeError: Error in all.equal(rooms.greater.price, test$sub3) : 
+  object 'rooms.greater.price' not found
 
 Traceback (most recent call last):
   File "/Users/Karl/anaconda/lib/python2.7/site-packages/gradebook/score.py", line 180, in check
@@ -245,10 +245,10 @@ Traceback (most recent call last):
     return super(SignatureTranslatedFunction, self).__call__(*args, **kwargs)
   File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/functions.py", line 99, in __call__
     res = super(Function, self).__call__(*new_args, **new_kwargs)
-RRuntimeError: Error in all.equal(bsqft.greater.price, test$sub3) : 
-  object 'bsqft.greater.price' not found
+RRuntimeError: Error in all.equal(rooms.greater.price, test$sub3) : 
+  object 'rooms.greater.price' not found
 
-ERROR:root:(1 points) Checking R('all.equal(bsqft.less.price, test$sub4)')[0]
+ERROR:root:(1 points) Checking R('all.equal(rooms.less.price, test$sub4)')[0]
 ERROR:root:... Expecting: True
 ERROR:root:... But got:   Traceback error
 ERROR:root:Got exception:
@@ -262,8 +262,8 @@ Traceback (most recent call last):
     return super(SignatureTranslatedFunction, self).__call__(*args, **kwargs)
   File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/functions.py", line 99, in __call__
     res = super(Function, self).__call__(*new_args, **new_kwargs)
-RRuntimeError: Error in all.equal(bsqft.less.price, test$sub4) : 
-  object 'bsqft.less.price' not found
+RRuntimeError: Error in all.equal(rooms.less.price, test$sub4) : 
+  object 'rooms.less.price' not found
 
 ERROR:root:Traceback (most recent call last):
   File "/Users/Karl/anaconda/lib/python2.7/site-packages/gradebook/score.py", line 180, in check
@@ -275,8 +275,8 @@ ERROR:root:Traceback (most recent call last):
     return super(SignatureTranslatedFunction, self).__call__(*args, **kwargs)
   File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/functions.py", line 99, in __call__
     res = super(Function, self).__call__(*new_args, **new_kwargs)
-RRuntimeError: Error in all.equal(bsqft.less.price, test$sub4) : 
-  object 'bsqft.less.price' not found
+RRuntimeError: Error in all.equal(rooms.less.price, test$sub4) : 
+  object 'rooms.less.price' not found
 
 Traceback (most recent call last):
   File "/Users/Karl/anaconda/lib/python2.7/site-packages/gradebook/score.py", line 180, in check
@@ -288,8 +288,8 @@ Traceback (most recent call last):
     return super(SignatureTranslatedFunction, self).__call__(*args, **kwargs)
   File "/Users/Karl/anaconda/lib/python2.7/site-packages/rpy2/robjects/functions.py", line 99, in __call__
     res = super(Function, self).__call__(*new_args, **new_kwargs)
-RRuntimeError: Error in all.equal(bsqft.less.price, test$sub4) : 
-  object 'bsqft.less.price' not found
+RRuntimeError: Error in all.equal(rooms.less.price, test$sub4) : 
+  object 'rooms.less.price' not found
 
 INFO:root:Executed R('fun.output <- priceByRooms(test$fun1, test$fun2, test$fun3)')
 ERROR:root:Got exception on main handler
