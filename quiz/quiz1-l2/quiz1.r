@@ -52,7 +52,7 @@ rooms.less.price <-  bsqft.less$price
 priceByRooms <- function(room.range, br, prices) {
     df <- data.frame(br,prices)
     colnames(df) <- c("br","prices")
-    return mean(df[(df$br >= room.range[1]) & (df$br <= room.range[2]),c("prices")])
+    #return mean(df[(df$br >= room.range[1]) & (df$br <= room.range[2]),c("prices")])
 
 }
 
