@@ -80,19 +80,19 @@
             }
         }, 
         "quiz": {
-            "note": "", 
-            "hash": "97155d6409600128aec03edbcbde5c7ad1995d5e", 
-            "earned": 0, 
+            "note": "quiz regrade", 
+            "hash": "3cc92c6534b30139e7fb9d401b991ca8b7e41f22", 
+            "earned": 8.7, 
             "possible": 13, 
-            "penalty": 0, 
+            "penalty": 1.3, 
             "parts": {
                 "quiz1": {
                     "possible": 9, 
-                    "earned": 0
+                    "earned": 6
                 }, 
                 "quiz1_fig": {
                     "possible": 4, 
-                    "earned": 0
+                    "earned": 4
                 }
             }
         }
