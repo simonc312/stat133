@@ -28,7 +28,7 @@ z <- rep((1:5),each=4)
 ## In one R command, create a variable [[ m ]] that is a 3-by-4 matrix and has
 ## the entries 10, 20, through 120, where the numbers are entered row by row
 ## (so the first row is [ 10 20 30 40 ]).
-m <- 0
+m <- matrix(1:12*10,nrow=3,ncol=4)
 
 ## Create a variable [[ n ]] that is a data frame of dimension 10 x 3
 ## where the first column is the numbers 1-10, the second column the letters a-j and the
