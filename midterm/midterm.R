@@ -23,7 +23,7 @@ y <- (x-1)*(-1)
 
 ## In one R command, create a variable [[ z ]] which is a vector and has
 ## the numbers 1 through 5, each repeated 4 times, in order (so 1 1 1 1 2 2 2 2 etc.)
-z <- rep((1:5),4)
+z <- rep((1:5),each=4)
 
 ## In one R command, create a variable [[ m ]] that is a 3-by-4 matrix and has
 ## the entries 10, 20, through 120, where the numbers are entered row by row
