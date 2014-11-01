@@ -25,7 +25,7 @@ truncate <- function(input.vector, trim=0) {
         else{ 
           lower_q = quantile(input.vector,trim)
           upper_q = quantile(input.vector,1-trim)
-          truncated.vector = input.vector[input.vector >= lower_q & input.vector <= upper_q]
+          truncated.vector <- input.vector[input.vector >= lower_q & input.vector <= upper_q]
         }
     }
 
@@ -54,7 +54,7 @@ tryCatch(checkIdentical(integer(0), truncate(1:6, trim=0.5)),
 outlierCutoff <- function(data) {
         # your code here
         sapply(data,function(e){stopifnot(class(e) == 'numeric')})
-        outlier.cutoffs = apply(data,2,function(c){c(median(c)-1.5*IQR(c),
+        outlier.cutoffs <- apply(data,2,function(c){c(median(c)-1.5*IQR(c),
                                    median(c)+1.5*IQR(c))})
 
 }
@@ -87,18 +87,21 @@ removeOutliers <- function(data, max.outlier.rate) {
         stopifnot(max.outlier.rate>=0 & max.outlier.rate<=1)
 
             # your code here
-        
-        num_outliers_matrix = apply(data,MARGIN=c(1,2),
-                                    function(row,col){
-                                      cutoffs_col = outlierCutoff(as(c,'matrix'))
-                                      
-                                        (row < cutoffs_col[1] | row > cutoffs_col[2])
-                                      )
+        #holds outliers by element 1 if outlier
+        cutoff_matrix = outlierCutoff(data)
+        num_outliers_matrix = apply(data,1,
+                                    function(row){
+                                      (sum(sapply(1:length(row),function(index){
+                                        if((row[index] < cutoff_matrix[index]) | 
+                                             (row[index] > cutoff_matrix[index+1]))
+                                          1
+                                        else 
+                                          0
+                                        })
+                                      )/length(row)) > max.outlier.rate
                                     }
-                                )
-        subset.data = sapply(data,function(obs){
-          
-          })
+                                  )
+      data[num_outliers_matrix != TRUE,]
     }
 
 tryCatch(checkEquals(remove.outlier.t, removeOutliers(ex1.test, 0.25), ),
@@ -157,7 +160,7 @@ stdLevelDiff <- function(data) {
         classes <- lapply(data,class)
         level_col <- data[[names(classes[classes=="factor"])]]
         numeric_cols <- data[names(classes[classes!="factor"])]
-        diff_mean_matrix = apply(numeric_cols,2,function(col){
+        level.diff <- apply(numeric_cols,2,function(col){
           overall_mean = mean(col)
           overall_sd = sd(col)
           by(col,level_col,function(x){
@@ -194,7 +197,7 @@ simpleNormSim <- function(means, sim.size=50, var=1) {
         # your code here
         sd_vector <- 1:length(means)
         sd_vector[] <- sqrt(var) 
-        lapply(means,function(m){rnorm(sim.size,mean=m, sd=sd_vector)})
+        simulation <- lapply(means,function(m){rnorm(sim.size,mean=m, sd=sd_vector)})
 }
 
 set.seed(47)
