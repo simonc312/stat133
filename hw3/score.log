@@ -1,0 +1,20 @@
+INFO:root:Executed R('local({r <- getOption(\'repos\'); r[\'CRAN\'] <- \'http://cran.r-project.org\'; options(repos=r)})')
+INFO:root:(2 points) Does the final plot have at least the elements in a basic plot? is y
+INFO:root:(2 points) Does the final plot contain a main title, an x-label and a y-label? is y
+INFO:root:(2 points) Does the final plot have the extension of line? is y
+INFO:root:(2 points) Are there two vertical lines with text names? is y
+INFO:root:(2 points) Are the vertical lines grey? is y
+INFO:root:(2 points) Is the plot not too cluttered? is y
+INFO:root:(2 points) Are there labels in the plot? is y
+INFO:root:(2 points) Are there circles and points in the plot? is y
+INFO:root:(2 points) Are there five labelled circles in the plot? is y
+INFO:root:(2 points) Does the basic plot look fine? is y
+INFO:root:(2 points) Does the plot look good? is y
+INFO:root:(2 points) Are the circles of decent size? is y
+INFO:root:(2 points) Are the colors reasonable? is y
+ERROR:root:(2 points) Checking Are the bars side-by-side?
+ERROR:root:... Expecting: False
+ERROR:root:... But got:   n
+INFO:root:(2 points) Are the labels rotated? is y
+INFO:root:(2 points) Does the title and the plot look okay? is y
+INFO:root:You got a 30 out of 32.
