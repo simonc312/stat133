@@ -34,6 +34,7 @@ moveRedCars <- function(num.rows,num.cols,grid.old,m){
       next_space = grid.old[row_index,col_index+1]
       if(isRed(cur_space) & isEmpty(next_space)){
         m[row_index,col_index+1] = cur_space
+        m[row_index,col_index] = next_space
       }
     }
   }
@@ -43,6 +44,7 @@ moveRedCars <- function(num.rows,num.cols,grid.old,m){
     next_space = grid.old[row_index,1]
     if(isRed(cur_space) & isEmpty(next_space)){
       m[row_index,1] = cur_space
+      m[row_index,col_index] = next_space
     }
   }
   return(m)
@@ -50,20 +52,22 @@ moveRedCars <- function(num.rows,num.cols,grid.old,m){
 
 moveBlueCars <- function(num.rows,num.cols,grid.old,m){
   for(col_index in 1:num.cols){
-    for(row_index in rev(1:(num.rows-1))){
+    for(row_index in rev(2:num.rows)){
       cur_space = grid.old[row_index,col_index]
-      next_space = grid.old[row_index+1,col_index]
+      next_space = grid.old[row_index-1,col_index]
       if(isBlue(cur_space) & isEmpty(next_space)){
         m[row_index-1,col_index] = cur_space
+        m[row_index,col_index] = next_space
       }
     }
   }
   #handle corner case last column 
   for(col_index in 1:num.cols){
-    cur_space = grid.old[row_index,num.cols]
+    cur_space = grid.old[1,num.cols]
     next_space = grid.old[num.rows,col_index]
     if(isBlue(cur_space) & isEmpty(next_space)){
       m[num.rows,col_index] = cur_space
+      m[row_index,col_index] = next_space
     }
   }
   return(m)
@@ -74,11 +78,9 @@ bml.step <- function(m){
   grid.old = m
   num.rows = dim(m)[1]
   num.cols = dim(m)[2]
-  # update m by move red cars
   m <- moveRedCars(num.rows,num.cols,grid.old,m)
-  # update m by move blue cars
   m <- moveBlueCars(num.rows,num.cols,grid.old,m)
-  if(identical(m,grid.old)){grid.new==FALSE}
+  if(identical(m,grid.old)){grid.new=FALSE}
   return(list(m, grid.new))
 }
 
@@ -87,5 +89,53 @@ bml.step <- function(m){
 ## Output : *up to you* (e.g. number of steps taken, did you hit gridlock, ...)
 
 bml.sim <- function(r, c, p){
+  grid <- bml.init(r,c,p)
+  initial.grid <- grid
+  end_iteration <- 0
+  is.grid_lock <- FALSE
+  for(iteration in 1:(r*c)){
+    step_output <- bml.step(grid)
+    if(step_output[[2]] == FALSE)
+      return(list(iteration,TRUE))
+    else{ end_iteration=end_iteration+1}
+    grid <- step_output[[1]]
+  }
+  return(list(end_iteration,is.grid_lock))
+}
 
+#Helper functions with iterating many experiment samples 
+
+# getDataFrame function outputs data frame that contains n samples 
+#per density in density vector
+getDataFrame <- function(density_vector,r,c,n){
+  grid.data.frame <-  data.frame(matrix(vector(), 0, 3,
+                                        dimnames=list(c(),c("Density","Iteration","GridLock"))),
+                                 stringsAsFactors=F)
+  for(density in density_vector){
+    grid.iteration.numbers <- sapply(rep(density,n),function(p){bml.sim(r,c,p)})
+    for(index in 1:(dim(grid.iteration.numbers)[2])){
+      new.row <- data.frame(Density=density,
+                            Iteration=grid.iteration.numbers[[1,index]],
+                            GridLock=grid.iteration.numbers[[2,index]])
+      grid.data.frame <- rbind(new.row,grid.data.frame)
+    }
+  }
+  return(grid.data.frame)
+}
+
+#find average iteration number for each density for grid lock cases
+#percentage resulted in grid locks
+getAverages <- function(grid.data.frame,density_vector){
+  average.matrix <- sapply(density_vector,function(p){
+    p.grid <- grid.data.frame[grid.data.frame$Density == p,]
+    lock.grid <- p.grid[p.grid$GridLock == TRUE,]
+    percent.gridlock <- sum(lock.grid$GridLock)/length(p.grid$GridLock)
+    if(length(lock.grid$Iteration) == 0){
+      c(p,0,percent.gridlock) 
+    }
+    else{
+      c(p,mean(lock.grid$Iteration),percent.gridlock)
+    }
+  })
+  return(average.matrix)
 }
