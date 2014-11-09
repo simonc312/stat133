@@ -10,13 +10,13 @@ source('bml_functions.R')
 
 #small 10x10 grids density varying from 0.1 to 1 by step size 0.1
 small.density.vector <- (1:10)/10
-small.grid.data.frame <- getDataFrame(small.density.vector,10,10,100)
+small.grid.data.frame <- getDataFrame(small.density.vector,10,10,1)
 averages.small.grid <- getAverages(small.grid.data.frame,small.density.vector)
 #for small grid sizes there isn't much leeway for having partial gridlocks 
 # it seems more likely to occur in larger grids 
 
 mid.density.vector <- (20:40)/100
-mid.grid.data.frame <- getDataFrame(mid.density.vector,50,50,100)
+mid.grid.data.frame <- getDataFrame(mid.density.vector,50,50,1)
 averages.mid.grid <- getAverages(mid.grid.data.frame,mid.density.vector)
 
 large.density.vector <- (2:9)/10

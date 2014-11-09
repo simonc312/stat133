@@ -43,7 +43,7 @@ moveRedCars <- function(num.rows,num.cols,grid.old,m){
     next_space = grid.old[row_index,1]
     if(isRed(cur_space) & isEmpty(next_space)){
       m[row_index,1] = cur_space
-      m[row_index,col_index] = next_space
+      m[row_index,num.cols] = next_space
     }
   }
   return(m)
@@ -62,11 +62,11 @@ moveBlueCars <- function(num.rows,num.cols,grid.old,m){
   }
   #handle corner case last column 
   for(col_index in 1:num.cols){
-    cur_space = grid.old[1,num.cols]
+    cur_space = grid.old[1,col_index]
     next_space = grid.old[num.rows,col_index]
     if(isBlue(cur_space) & isEmpty(next_space)){
       m[num.rows,col_index] = cur_space
-      m[row_index,col_index] = next_space
+      m[1,col_index] = next_space
     }
   }
   return(m)
@@ -77,12 +77,9 @@ bml.step <- function(m){
   grid.old = m
   num.rows = dim(m)[1]
   num.cols = dim(m)[2]
-  getImage(m)
   m <- moveRedCars(num.rows,num.cols,grid.old,m)
-  getImage(m)
   grid.old2 <- m
   m <- moveBlueCars(num.rows,num.cols,grid.old2,m)
-  getImage(m)
   if(identical(m,grid.old)){grid.new=FALSE}
   return(list(m, grid.new))
 }
@@ -96,23 +93,31 @@ bml.sim <- function(r, c, p){
   initial.grid <- grid
   end_iteration <- 0
   is.grid_lock <- FALSE
-  for(iteration in 1:(5)){
+  stop.iter <- sqrt(r*c)
+  for(iteration in 1:stop.iter){
     step_output <- bml.step(grid)
-    if(step_output[[2]] == FALSE){
-      getImage(grid);
-      return(list(iteration,TRUE))}
-    else{ end_iteration=end_iteration+1}
     grid <- step_output[[1]]
-    getImage(grid);
+    getImage(grid,iteration,r,c,p)
+    if(step_output[[2]] == FALSE){
+      #getImage(grid,iteration,r,c,p);
+      return(list(iteration,TRUE))
+    }
+    else 
+      end_iteration=end_iteration+1
   }
-  getImage(grid);
+  getImage(grid,stop.iter,r,c,p);
   return(list(end_iteration,is.grid_lock))
 }
 
 #Helper functions with iterating many experiment samples
 
-getImage <- function(m){
-  image(t(apply(m,2,rev)),col=c("White","Red","Blue"))
+getImage <- function(m,iter,r,c,p){
+  color.vector <- c("White","Red","Blue")
+  if(length(m[m==0]) == 0)
+    color.vector <- c("Red","Blue")
+  image(t(apply(m,2,rev)),col=color.vector,
+        main=paste("Size: ",r," x ",c," Density: ",p," Step: ", iter)
+        , useRaster=TRUE)
 }
 
 # getDataFrame function outputs data frame that contains n samples 
