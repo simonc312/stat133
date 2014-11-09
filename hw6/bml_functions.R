@@ -13,7 +13,6 @@ bml.init <- function(r, c, p){
   random.vector.entries <- sample(rep(c(1,2,0),c(half.num.cars,half.num.cars,num.empty.spaces)))
   m <- matrix(random.vector.entries,ncol=c,nrow=r)
   return(m)  
-   #return(m)
 }
 
 #### Function to move the system one step (east and north)
@@ -78,8 +77,12 @@ bml.step <- function(m){
   grid.old = m
   num.rows = dim(m)[1]
   num.cols = dim(m)[2]
+  getImage(m)
   m <- moveRedCars(num.rows,num.cols,grid.old,m)
-  m <- moveBlueCars(num.rows,num.cols,grid.old,m)
+  getImage(m)
+  grid.old2 <- m
+  m <- moveBlueCars(num.rows,num.cols,grid.old2,m)
+  getImage(m)
   if(identical(m,grid.old)){grid.new=FALSE}
   return(list(m, grid.new))
 }
@@ -93,17 +96,24 @@ bml.sim <- function(r, c, p){
   initial.grid <- grid
   end_iteration <- 0
   is.grid_lock <- FALSE
-  for(iteration in 1:(r*c)){
+  for(iteration in 1:(5)){
     step_output <- bml.step(grid)
-    if(step_output[[2]] == FALSE)
-      return(list(iteration,TRUE))
+    if(step_output[[2]] == FALSE){
+      getImage(grid);
+      return(list(iteration,TRUE))}
     else{ end_iteration=end_iteration+1}
     grid <- step_output[[1]]
+    getImage(grid);
   }
+  getImage(grid);
   return(list(end_iteration,is.grid_lock))
 }
 
-#Helper functions with iterating many experiment samples 
+#Helper functions with iterating many experiment samples
+
+getImage <- function(m){
+  image(t(apply(m,2,rev)),col=c("White","Red","Blue"))
+}
 
 # getDataFrame function outputs data frame that contains n samples 
 #per density in density vector

@@ -15,6 +15,13 @@ averages.small.grid <- getAverages(small.grid.data.frame,small.density.vector)
 #for small grid sizes there isn't much leeway for having partial gridlocks 
 # it seems more likely to occur in larger grids 
 
+mid.density.vector <- (20:40)/100
+mid.grid.data.frame <- getDataFrame(mid.density.vector,50,50,100)
+averages.mid.grid <- getAverages(mid.grid.data.frame,mid.density.vector)
+
+large.density.vector <- (2:9)/10
+large.grid.data.frame <- getDataFrame(large.density.vector,100,100,100)
+averages.large.grid <- getAverages(large.grid.data.frame,large.density.vector)
 #There has also been research in rectangular lattices instead of square ones.
 #For rectangles with coprime dimensions, the intermediate states are
 #self-organized bands of jams and free-flow with detailed geometric structure,
