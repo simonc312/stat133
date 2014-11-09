@@ -93,19 +93,19 @@ bml.sim <- function(r, c, p){
   initial.grid <- grid
   end_iteration <- 0
   is.grid_lock <- FALSE
-  stop.iter <- sqrt(r*c)
+  stop.iter <- r*c
   for(iteration in 1:stop.iter){
     step_output <- bml.step(grid)
     grid <- step_output[[1]]
-    getImage(grid,iteration,r,c,p)
+    print(paste("iter",iteration,"density",p))
     if(step_output[[2]] == FALSE){
-      #getImage(grid,iteration,r,c,p);
+      #getImage(grid,iteration,r,c,p)
       return(list(iteration,TRUE))
     }
     else 
       end_iteration=end_iteration+1
   }
-  getImage(grid,stop.iter,r,c,p);
+  #getImage(grid,stop.iter,r,c,p);
   return(list(end_iteration,is.grid_lock))
 }
 
