@@ -47,6 +47,16 @@ mid.density.vector3 <- (20:40)/50
 mid.grid.data.frame3 <- getDataFrame(mid.density.vector3,25,100,10)
 averages.mid.grid3 <- getAverages(mid.grid.data.frame3,mid.density.vector3)
 
+plot(averages.mid.grid3[1,],averages.mid.grid3[2,], type="l",
+     main="Density vs Avg Gridlock Step Count in 25x100 Grid",
+     xlab="Density", 
+     ylab="Avg Gridlock Step Count")
+
+plot(averages.mid.grid3[1,],averages.mid.grid3[3,]*100, type="l",
+     main="Density vs %Grid Lock of 10 Iterations in 25x100 Grid",
+     xlab="Density", 
+     ylab="% Grid Lock")
+
 mid.density.vector4 <- (20:40)/50
 mid.grid.data.frame4 <- getDataFrame(mid.density.vector3,10,250,10)
 averages.mid.grid4 <- getAverages(mid.grid.data.frame3,mid.density.vector3)
