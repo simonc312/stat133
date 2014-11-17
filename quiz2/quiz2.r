@@ -10,6 +10,7 @@
 
 num_students <- function(k) {
   # your code here
+  return(dpois(1,k))
 }
 
 # Assume all students arrive at different times.
@@ -28,6 +29,7 @@ num_students <- function(k) {
 
 interarrival_times <- function(num) {
   # your code here
+  return(rexp(num,rate=1/5))
 }
 
 # For student i, it takes Z_i minutes for Johnny to answer questions.
@@ -43,6 +45,7 @@ interarrival_times <- function(num) {
 
 service_times <- function(num) {
   # your code here
+  return(rexp(num,rate=1/7))
 }
 
 # Compute the waiting time for each student.
@@ -66,6 +69,14 @@ service_times <- function(num) {
 # <wait>: a vector that contains the waiting time for each student
 waiting_times <- function(inter, serv){
   # your code here
+  wait_times <- c(0)
+  for(i in 2:length(inter)){
+    time <- serv[i-1]+wait_times[i-1]-inter[i]
+    if(time < 0)
+      time <- 0
+    wait_times <- append(time,wait_times)
+  }
+  return(wait_times)
 }
 
 # Simulation
@@ -81,14 +92,21 @@ waiting_times <- function(inter, serv){
 
 queueing_sim <- function(k) {
   # your code here
+  inter_times <- interarrival_times(k)
+  serv <- service_times(k)
+  wait_times <- waiting_times(inter_times,serv)
+  queue.frame <- data.frame(inter= inter_times,
+                            serv= serv,
+                            wait= wait_times,
+                            total= serv+wait_times)
+  return(queue.frame)
 }
 
 set.seed(1234)
 # Run the simulation 500 times with k = 11. 
 # Save the output in a variable called sim500.
 # sim500 is a list of 500 data frames.
-# sim500 <- you code here
-
+ sim500 <- lapply(1:500,function(i){queueing_sim(11)})
 
 
 
@@ -96,7 +114,7 @@ set.seed(1234)
 # the average total time spent in OH.
 # Save the result in a matrix called avg_wait_total.
 # avg_wait_total is a 2x500 matrix (without any row names or column names).
-# avg_wait_total <- your code here
+avg_wait_total <- do.call(rbind,lapply(sim500,function(sim){c(mean(sim$wait),mean(sim$total))}))
 
 
 
@@ -126,6 +144,7 @@ set.seed(1234)
 
 break_times <- function(n){
   # your code here
+  return(sapply(rnorm(n,3,2),function(r){if(r<0){0}else{r}}))
 }
 
 # Write a function called serv_wait_sick that computes
@@ -142,9 +161,36 @@ break_times <- function(n){
 #  <serv>: a vector of the (updated) service times
 #  <wait>: a vector of the waiting times
 # Remark: There is no randomness in this function.
+waiting_times_sick <- function(inter, serv){
+  # your code here
+  wait_times <- c(0)
+  break_time <- 0
+  for(i in 2:length(inter)){
+    serv_time <- serv[i-1]
+    break_time <- 0
+    if(i %% 2 == 0)
+      break_time <- 3
+    if(i == 5)
+      break_time <- 17
+    if(i > 5)
+      serv_time <- 1.5*serv_time
+    time <- serv_time+wait_times[i-1]-inter[i]+break_time
+    if(time < 0)
+      time <- 0
+    wait_times <- append(time,wait_times)
+  }
+  return(wait_times)
+}
+
 
 serv_wait_sick <- function(inter, serv, br_times){
   # your code here
+  wait_times <- waiting_times_sick(inter,serv)
+  wait.frame <- data.frame(
+                            serv= serv,
+                            wait= wait_times
+                            )
+  return(wait.frame)
 }
 
 # End of quiz.
