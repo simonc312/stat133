@@ -15,3 +15,6 @@ simulateMH <- function(switch=T) {
 
 switch.strat <- replicate(10000, simulateMH())
 nswitch.strat <- replicate(10000, simulateMH(F))
+#coin <- c("Heads", "Tails")
+#table(sample(coin, size = 100, replace = TRUE)) gives number of heads or tails 
+# after 100 flips
