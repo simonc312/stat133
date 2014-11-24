@@ -112,6 +112,23 @@
                     "earned": 12
                 }
             }
+        }, 
+        "hw6": {
+            "note": "", 
+            "hash": "e5e93aec1c3386c115404e1ea36f3ad55cf84cbc", 
+            "earned": 17, 
+            "possible": 20, 
+            "penalty": 0, 
+            "parts": {
+                "bml_rep": {
+                    "possible": 5, 
+                    "earned": 5
+                }, 
+                "bml_functions": {
+                    "possible": 15, 
+                    "earned": 12
+                }
+            }
         }
     }, 
     "section": "lab2"
