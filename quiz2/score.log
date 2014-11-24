@@ -1,0 +1,58 @@
+INFO:root:Executed R('load(\'../../instructor/assignments/quiz2/quiz2-l2/quiz2-l2-tests.rda\')')
+INFO:root:Executed R('set.seed(123)')
+INFO:root:Executed R('out1 <- num_students(10)')
+INFO:root:(1 points) R('all.equal(length(out1), 1)')[0] is True
+ERROR:root:(1 points) Checking R('all.equal(out1, sol$out1)')[0]
+ERROR:root:... Expecting: True
+ERROR:root:... But got:   Mean relative difference: 17620.17
+INFO:root:Executed R('set.seed(123)')
+INFO:root:Executed R('out2 <- interarrival_times(8)')
+INFO:root:(1 points) R('all.equal(length(out2), 8)')[0] is True
+INFO:root:(1 points) R('all.equal(out2, sol$out2)')[0] is True
+INFO:root:Executed R('set.seed(123)')
+INFO:root:Executed R('out3 <- service_times(8)')
+INFO:root:(1 points) R('all.equal(length(out3), 8)')[0] is True
+INFO:root:(1 points) R('all.equal(out3, sol$out3)')[0] is True
+INFO:root:Executed R('out4 <- waiting_times(rep(10, 10), c(rep(c(1,11,10), times = 3), 4))')
+INFO:root:(1 points) R('all.equal(length(out4), 10)')[0] is True
+ERROR:root:(1 points) Checking R('all.equal(out4, sol$out4)')[0]
+ERROR:root:... Expecting: True
+ERROR:root:... But got:   Mean relative difference: 3
+INFO:root:Executed R('set.seed(123)')
+INFO:root:Executed R('out5 <- queueing_sim(10)')
+INFO:root:(1 points) R('all.equal(is.data.frame(out5), T)')[0] is True
+ERROR:root:(1 points) Checking R('all.equal(dim(out5), c(8,4))')[0]
+ERROR:root:... Expecting: True
+ERROR:root:... But got:   Mean relative difference: 0.2
+ERROR:root:(1 points) Checking R('all.equal(out5, sol$out5)')[0]
+ERROR:root:... Expecting: True
+ERROR:root:... But got:   Attributes: < Component “row.names”: Numeric: lengths (10, 8) differ >
+INFO:root:(1 points) R('all.equal(is.list(sim500), T)')[0] is True
+ERROR:root:(1 points) Checking R('all.equal(sim500, sol$sim500)')[0]
+ERROR:root:... Expecting: True
+ERROR:root:... But got:   Component 1: Attributes: < Component “row.names”: Numeric: lengths (11, 6) differ >
+INFO:root:(1 points) R('all.equal(is.matrix(avg_wait_total), T)')[0] is True
+ERROR:root:(1 points) Checking R('all.equal(dim(avg_wait_total), c(2, 500))')[0]
+ERROR:root:... Expecting: True
+ERROR:root:... But got:   Mean relative difference: 1.984064
+ERROR:root:(1 points) Checking R('all.equal(avg_wait_total[1,], sol$avg_wait_total[1,])')[0]
+ERROR:root:... Expecting: True
+ERROR:root:... But got:   Numeric: lengths (2, 500) differ
+ERROR:root:(1 points) Checking R('all.equal(avg_wait_total[2,], sol$avg_wait_total[2,])')[0]
+ERROR:root:... Expecting: True
+ERROR:root:... But got:   Numeric: lengths (2, 500) differ
+ERROR:root:(1 points) Checking R('all.equal(serv_wait_sick(rep(10,10), rep(10, 10), c(0,1,3,2,1)), data.frame(serv = c(10,10,10,10,10,15,15,15,15,15), wait = c(0,0,0,0,1,18,26,31,38,43)))')[0]
+ERROR:root:... Expecting: True
+ERROR:root:... But got:   Component “serv”: Mean relative difference: 0.5
+INFO:root:Executed R('out6 <- serv_wait_sick(rep(8,8), rep(12,8), 1:8)')
+INFO:root:(1 points) R('all.equal(dim(out6), c(8, 2))')[0] is True
+ERROR:root:(1 points) Checking R('all.equal(out6[,1], sol$out6[,1])')[0]
+ERROR:root:... Expecting: True
+ERROR:root:... But got:   Mean relative difference: 0.5
+ERROR:root:(1 points) Checking R('all.equal(out6[,2], sol$out6[,2])')[0]
+ERROR:root:... Expecting: True
+ERROR:root:... But got:   Mean relative difference: 2.506667
+INFO:root:Executed R('out7 <- serv_wait_sick(rep(8,3), rep(12,3), 1:3)')
+INFO:root:(1 points) R('all.equal(dim(out7), c(3, 2))')[0] is True
+INFO:root:(1 points) R('all.equal(out7[,1], sol$out7[,1])')[0] is True
+INFO:root:You got a 15 out of 26.

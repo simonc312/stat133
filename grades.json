@@ -129,6 +129,19 @@
                     "earned": 12
                 }
             }
+        }, 
+        "quiz2": {
+            "note": "", 
+            "hash": "c5da9f120e00c877b78a7ba4e122a97aa0903908", 
+            "earned": 15, 
+            "possible": 26, 
+            "penalty": 0, 
+            "parts": {
+                "quiz2": {
+                    "possible": 26, 
+                    "earned": 15
+                }
+            }
         }
     }, 
     "section": "lab2"
