@@ -276,7 +276,7 @@ rownames(presDist) <- speechesDF$Pres
 col = cols[presParty[rownames(presDist)]]
   
 plot(mds,type='n')
-text(mds,labels=levels(speechesDF$initial),col=col)
+text(mds,labels=levels(speechesDF$initial),col=col,cex=0.5)
 legend(0.3,-0.05,col=cols,pch='o',legend=levels(speechesDF$party),cex=0.5)
 ### Use hierarchical clustering to produce a visualization of  the results.
 # Compare the two plots.
