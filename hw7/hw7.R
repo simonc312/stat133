@@ -131,10 +131,9 @@ speechToWords = function(sentences) {
   fullWordList = c()
   for(sentence in sentences){
     removePunc = gsub("[[:punct:]]"," ",sentence)
-    wordList = sapply(strsplit(removePunc,"[ ]"),function(word){
-      removeApplause = gsub("\\[Applause\\]","",word)
-      removeNum = gsub("[[:digit:]]","",removeApplause)
-    })
+    removeApplause = gsub("\\[Applause\\]"," ",removePunc)
+    removeNum = gsub("[[:digit:]]"," ",removeApplause)
+    wordList = unlist(strsplit(removeNum,"[ ]"))
   removeEmpty1 = tolower(wordList[which(wordList != "")])
   removeEmpty2 = wordStem(removeEmpty1)
   fullWordList = c(fullWordList,removeEmpty2[which(removeEmpty2 != "")])
@@ -173,10 +172,13 @@ uniqueWords <- sort(unique(unlist(speechWords)))
 # [1] "a" "b" "c"
 
 # You may want to use an apply statment to first create a list of word vectors, one for each speech.
-speechUniqueWordCountList <- lapply(speechWords,function(speech){table(c(speech,uniqueWords))-1})
+speechUniqueWordCountList <-lapply(speechWords,function(speech){table(c(speech,uniqueWords))-1})
 # your code to create [wordMat] here:
-wordMat <- matrix(speechUniqueWordCountList,nrow=length(uniqueWords),ncol=n.speeches)
-
+wordMat <- matrix(nrow=length(uniqueWords),ncol=n.speeches)
+for(col in 1:n.speeches){
+  wordMat[,col] <- speechUniqueWordCountList[[col]]
+}
+rownames(wordMat) <- uniqueWords
 # Load the dataframe [speechesDF] which has two variables,
 # president and party affiliation (make sure to keep this line in your code):
 
@@ -206,9 +208,21 @@ speechesDF$month <- speechMo
 # and that colum is the sum of all the columns corresponding to speeches made by said president.
 
 # get the sum of word counts for each president based on all the speeches they gave
-presWordList <- sapply(levels(speechesDF$Pres),function(pres){speechesDF[speechesDF$Pres==pres,c("words","chars","sent")] })  
-presidentWordMat <- matrix(presWordList,ncol=length(levels(speechesDF$Pres)),nrow=length(uniqueWords)) 
-  
+presNames <- levels(speechesDF$Pres)
+presWordList <- lapply(presNames,function(name){
+  sumCount = c()
+  for(index in 1:length(uniqueWords)){
+    row = wordMat[index,speechesDF$Pres == name]
+    sumCount = c(sumCount,sum(row))
+  }
+  return(sumCount)  
+})  
+presidentWordMat <- matrix(ncol=length(presNames),nrow=length(uniqueWords)) 
+for(col in 1:length(presNames)){
+  presidentWordMat[,col] <- presWordList[[col]]
+}
+rownames(presidentWordMat) <- uniqueWords
+colnames(presidentWordMat) <- presNames
 # At the beginning of this file we sourced in a file "computeSJDistance.R"
 # It has the following function:
 # computeSJDistance = (tf, df, terms, logdf = TRUE, verbose = TRUE)
@@ -220,8 +234,8 @@ presidentWordMat <- matrix(presWordList,ncol=length(levels(speechesDF$Pres)),nro
 # Document Frequency
 # [docFreq]: vector of the same length as [uniqueWords], 
 # count the number of presidents that used the word
-
-  docFreq <- sapply(uniqueWords,function(word){length(presidentWordMat[word,])})
+# be sure to check docFreq not all equal count columns with nonzero values for word only 
+  docFreq <- sapply(uniqueWords,function(word){length(which(presidentWordMat[word,] != 0))})
     
 # Call the function computeSJDistance() with the arguments
 # presidentWordMat, docFreq and uniqueWords
@@ -247,7 +261,7 @@ plot(mds)
 # is the party affiliation and the names attribute has the names of the presidents.
 # Hint: the info is in speechesDF$party and speechesDF$Pres
 
-presNames <- levels(speechesDF$Pres)
+
 presParty <- sapply(presNames,function(pres){speechesDF$party[speechesDF$Pres==pres][1]})
 names(presParty) <- presNames
 # use rainbow() to pick one unique color for each party (there are 6 parties)
@@ -258,10 +272,11 @@ cols <- rainbow(6)
 # First plot mds by calling plot() with type='n' (it will create the axes but not plot the points)
 # you set the title and axes labels in the call to plot()
 # then call text() with the presidents' names as labels and the color argument
+rownames(presDist) <- speechesDF$Pres 
 col = cols[presParty[rownames(presDist)]]
   
 plot(mds,type='n')
-text(labels=levels(speechesDF$inital),col=col)
+text(mds,labels=levels(speechesDF$inital),col=col)
 
 ### Use hierarchical clustering to produce a visualization of  the results.
 # Compare the two plots.
