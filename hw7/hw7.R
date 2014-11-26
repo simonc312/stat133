@@ -281,7 +281,7 @@ legend(0.3,-0.05,col=cols,pch='o',legend=levels(speechesDF$party),cex=0.5)
 ### Use hierarchical clustering to produce a visualization of  the results.
 # Compare the two plots.
 hc = hclust(as.dist(presDist))
-plot(hc)
+plot(hc, cex=0.5)
 
 ## Final part 
 # Use the data in the dataframe speechesDF to create the plots:
