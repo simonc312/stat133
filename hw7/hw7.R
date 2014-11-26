@@ -130,15 +130,14 @@ speechToWords = function(sentences) {
 # Output : words, a character vector where each element is one word 
   fullWordList = c()
   for(sentence in sentences){
-  wordList = sapply(strsplit(sentence,"[ ]"),function(word){
-    removeApplause = gsub("\\[Applause\\]","",word)
-    removePunc = gsub("[[:punct:]]","",removeApplause)
-    removeNum = gsub("[[:digit:]]","",removePunc)
+    removePunc = gsub("[[:punct:]]"," ",sentence)
+    wordList = sapply(strsplit(removePunc,"[ ]"),function(word){
+      removeApplause = gsub("\\[Applause\\]","",word)
+      removeNum = gsub("[[:digit:]]","",removeApplause)
     })
   removeEmpty1 = tolower(wordList[which(wordList != "")])
-  fullWordList = c(fullWordList,removeEmpty1)
-  #removeEmpty2 = wordStem(removeEmpty1)
-  #return(removeEmpty2[which(removeEmpty2 != "")])
+  removeEmpty2 = wordStem(removeEmpty1)
+  fullWordList = c(fullWordList,removeEmpty2[which(removeEmpty2 != "")])
   }
   return(fullWordList)
   # return a character vector of all words in the speech
@@ -152,7 +151,7 @@ speechWords <- lapply(speechesL,speechToWords)
 # Unlist the variable speechWords (use unlist()) to get a list of all words in all speeches, the create:
 # [uniqueWords] : a vector with every word that appears in the speeches in alphabetic order
 
-uniqueWords <- <your code here>
+uniqueWords <- sort(unique(unlist(speechWords)))
 
 # Create a matrix [wordCount]
 # the number of rows should be the same as the length of [uniqueWords]
@@ -174,14 +173,14 @@ uniqueWords <- <your code here>
 # [1] "a" "b" "c"
 
 # You may want to use an apply statment to first create a list of word vectors, one for each speech.
-
+speechUniqueWordCountList <- lapply(speechWords,function(speech){table(c(speech,uniqueWords))-1})
 # your code to create [wordMat] here:
-
+wordMat <- matrix(speechUniqueWordCountList,nrow=length(uniqueWords),ncol=n.speeches)
 
 # Load the dataframe [speechesDF] which has two variables,
 # president and party affiliation (make sure to keep this line in your code):
 
-  load("speeches_dataframe.Rda")
+  load("speeches_dataframe_new.Rda")
 
 ## Now add the following variables to the  dataframe [speechesDF]:
 # yr - year of the speech (numeric) (i.e. [speechYr], created above)
@@ -191,21 +190,24 @@ uniqueWords <- <your code here>
 # chars - number of letters in the speech (use [speechWords] to calculate)
 # sent - number of sentences in the speech (use [speechesL] to calculate this)
 
-words <- <your code here>
-chars <- <your code here>
-sentences <- <your code here>
+words <- sapply(speechWords,length)
+chars <- sapply(speechWords,function(speech){sum(sapply(speech,nchar))})
+sentences <- sapply(speechesL,length)
 
 # Update the data frame
-speechesDF <- <your code here>
-
+speechesDF$words <- words
+speechesDF$chars <- chars
+speechesDF$sent <- sentences
+speechesDF$yr <- speechYr
+speechesDF$month <- speechMo
 ######################################################################
 ## Create a matrix [presidentWordMat] 
 # This matrix should have one column for each president (instead of one for each speech)
-# and that colum is the sum of all the columns corresponding to speeches make by said president.
+# and that colum is the sum of all the columns corresponding to speeches made by said president.
 
 # note that your code will be a few lines...
-  
-presidentWordMat <- <your code here> 
+presWordList <- sapply(levels(speechesDF$Pres),function(pres){speechesDF[speechesDF$Pres==pres,c("words","chars","sent")] })  
+presidentWordMat <- matrix(ncol=length(levels(speechesDF$Pres)),nrow=length(uniqueWords)) 
   
 # At the beginning of this file we sourced in a file "computeSJDistance.R"
 # It has the following function:
@@ -245,11 +247,11 @@ plot(mds)
 # is the party affiliation and the names attribute has the names of the presidents.
 # Hint: the info is in speechesDF$party and speechesDF$Pres
 
-presParty <- <your code here>
-  
+presParty <- as.vector(speechesDF$party,mode="character")
+names(presParty) <- speechesDF$Pres
 # use rainbow() to pick one unique color for each party (there are 6 parties)
 
-cols <- <your code here>
+cols <- rainbow(6)
 
 # Now we are ready to plot again.
 # First plot mds by calling plot() with type='n' (it will create the axes but not plot the points)
