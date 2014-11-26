@@ -38,21 +38,21 @@ source("computeSJDistance.R")
 # Check the class and dimension of [speeches].  Open the textfile in 
 # an editor and compare it to [speeches]
 
-speeches <- <your code here>
+speeches <- readLines(file("stateoftheunion1790-2012.txt"))
 
 # The speeches are separated by a line with three stars (***).
 # Create a numeric vector [breaks] with the line numbers of ***.
 # Create the variable [n.speeches] a numeric variable with the number of speeches
 # Question: Does every single *** in the file indicate the beginning of a speech?
-
-breaks <- <your code here>
-n.speeches <- <your code here>
+# yes it seems like it because all the presidents names can be parsed from incrementing breaks by 3
+breaks <- which(speeches == "***")
+n.speeches <- length(breaks)
 
 # Use the vector [breaks] and [speeches] to create a 
 # character vector [presidents]
 # with the name of the president delivering the address
 
-presidents <- <your code here>
+presidents <- speeches[breaks+3]
 
 # Use [speeches] and the vector [breaks] to create [tempDates], 
 # a character vector with the dates of each speech
@@ -61,10 +61,10 @@ presidents <- <your code here>
 # a character vector [speechMo] with the month of each speech
 # Note: you may need to use two lines of code to create one/both variables.
   
-tempDates <- <your code here>
+tempDates <- speeches[breaks+4]
   
-speechYr <- <your code here>
-speechMo <- <your code here>
+speechYr <- sapply(tempDates,USE.NAMES= F, function(date){return(as.numeric(substring(date,nchar(date)-3,nchar(date))))})
+speechMo <- sapply(tempDates,USE.NAMES= F, function(date){return()})
 
 # Create a list variable [speechesL] which has the full text of each speech.
 # The variable [speechesL] should have one element for each speech.
@@ -85,7 +85,10 @@ speeches <- gsub("U.S.", "US", speeches)
 
 speechesL <- list()
 for(i in 1:n.speeches){
-  <your code here>
+  lastIndex = (breaks[i+1]-2)
+  if(i == n.speeches)
+    lastIndex = length(speeches)-2
+  speechesL[i] = strsplit(paste(speeches[(breaks[i]+5):lastIndex],collapse=" "),"[.?!]")
 }
 
 #### Word Vectors 
@@ -114,7 +117,7 @@ for(i in 1:n.speeches){
 # -- make all characters lower case
 # -- Remove the phrase "Applause."
 # -- use the function wordStem() from the package SnowballC to 
-#    get the stem of each work
+#    get the stem of each word
 # -- finally, remove all empty words, i.e. strings that match "" 
 #    both BEFORE running wordStem() *and* AFTER
 
@@ -125,16 +128,26 @@ for(i in 1:n.speeches){
 speechToWords = function(sentences) {
 # Input  : sentences, a character string
 # Output : words, a character vector where each element is one word 
-
-  <your code here>
-  
+  fullWordList = c()
+  for(sentence in sentences){
+  wordList = sapply(strsplit(sentence,"[ ]"),function(word){
+    removeApplause = gsub("\\[Applause\\]","",word)
+    removePunc = gsub("[[:punct:]]","",removeApplause)
+    removeNum = gsub("[[:digit:]]","",removePunc)
+    })
+  removeEmpty1 = tolower(wordList[which(wordList != "")])
+  fullWordList = c(fullWordList,removeEmpty1)
+  #removeEmpty2 = wordStem(removeEmpty1)
+  #return(removeEmpty2[which(removeEmpty2 != "")])
+  }
+  return(fullWordList)
   # return a character vector of all words in the speech
 }
 
-#### Apply the function speechToWords() to each speach
+#### Apply the function speechToWords() to each speech
 # Create a list, [speechWords], where each element of the list is a vector
 # with the words from that speech.
-speechWords <- <your code here>
+speechWords <- lapply(speechesL,speechToWords)
 
 # Unlist the variable speechWords (use unlist()) to get a list of all words in all speeches, the create:
 # [uniqueWords] : a vector with every word that appears in the speeches in alphabetic order
