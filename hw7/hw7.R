@@ -276,8 +276,8 @@ rownames(presDist) <- speechesDF$Pres
 col = cols[presParty[rownames(presDist)]]
   
 plot(mds,type='n')
-text(mds,labels=levels(speechesDF$inital),col=col)
-
+text(mds,labels=levels(speechesDF$initial),col=col)
+legend(0.3,-0.05,col=cols,pch='o',legend=levels(speechesDF$party),cex=0.5)
 ### Use hierarchical clustering to produce a visualization of  the results.
 # Compare the two plots.
 hc = hclust(as.dist(presDist))
@@ -292,11 +292,11 @@ plot(hc)
 # x-axis: speech year, y-axis: average sentence length (word/sent)
 
 # your plot statements below:
-plot(speechesDF$yr,speechesDF$sent)
-plot(speechesDF$yr,speechesDF$words)
-plot(speechesDF$yr,speechesDF$chars)
-plot(speechesDF$yr,speechesDF$chars/speechesDF$words)
-plot(speechesDF$yr,speechesDF$words/speechesDF$sent)
+plot(speechesDF$yr,speechesDF$sent,col=col,xlab="Year",ylab="Sentence Count")
+plot(speechesDF$yr,speechesDF$words,col=col,xlab="Year",ylab="Word Count")
+plot(speechesDF$yr,speechesDF$chars,col=col,xlab="Year",ylab="Character Count")
+plot(speechesDF$yr,speechesDF$chars/speechesDF$words,col=col,xlab="Year",ylab="Average Word Length")
+plot(speechesDF$yr,speechesDF$words/speechesDF$sent,col=col,xlab="Year",ylab="Average Sentence Length")
 
 
 
