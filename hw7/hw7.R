@@ -205,9 +205,9 @@ speechesDF$month <- speechMo
 # This matrix should have one column for each president (instead of one for each speech)
 # and that colum is the sum of all the columns corresponding to speeches made by said president.
 
-# note that your code will be a few lines...
+# get the sum of word counts for each president based on all the speeches they gave
 presWordList <- sapply(levels(speechesDF$Pres),function(pres){speechesDF[speechesDF$Pres==pres,c("words","chars","sent")] })  
-presidentWordMat <- matrix(ncol=length(levels(speechesDF$Pres)),nrow=length(uniqueWords)) 
+presidentWordMat <- matrix(presWordList,ncol=length(levels(speechesDF$Pres)),nrow=length(uniqueWords)) 
   
 # At the beginning of this file we sourced in a file "computeSJDistance.R"
 # It has the following function:
@@ -221,19 +221,19 @@ presidentWordMat <- matrix(ncol=length(levels(speechesDF$Pres)),nrow=length(uniq
 # [docFreq]: vector of the same length as [uniqueWords], 
 # count the number of presidents that used the word
 
-  docFreq <- <your code here>
+  docFreq <- sapply(uniqueWords,function(word){length(presidentWordMat[word,])})
     
 # Call the function computeSJDistance() with the arguments
 # presidentWordMat, docFreq and uniqueWords
 # and save the return value in the matrix [presDist]
 
-presDist <- computeSJDistance( < insert arguments here >)
+presDist <- computeSJDistance(wordMat,docFreq ,uniqueWords,logdf = TRUE, verbose = TRUE)
 
-## Visuzlise the distance matrix using multidimensional scaling.
+## Visualize the distance matrix using multidimensional scaling.
 # Call the function cmdscale() with presDist as input.
 # Store the result in the variable [mds] by 
 
-mds <- <your code here>
+mds <- cmdscale(presDist)
 
 # First do a simple plot the results:
 plot(mds)
@@ -247,8 +247,9 @@ plot(mds)
 # is the party affiliation and the names attribute has the names of the presidents.
 # Hint: the info is in speechesDF$party and speechesDF$Pres
 
-presParty <- as.vector(speechesDF$party,mode="character")
-names(presParty) <- speechesDF$Pres
+presNames <- levels(speechesDF$Pres)
+presParty <- sapply(presNames,function(pres){speechesDF$party[speechesDF$Pres==pres][1]})
+names(presParty) <- presNames
 # use rainbow() to pick one unique color for each party (there are 6 parties)
 
 cols <- rainbow(6)
@@ -257,10 +258,10 @@ cols <- rainbow(6)
 # First plot mds by calling plot() with type='n' (it will create the axes but not plot the points)
 # you set the title and axes labels in the call to plot()
 # then call text() with the presidents' names as labels and the color argument
-# col = cols[presParty[rownames(presDist)]]
+col = cols[presParty[rownames(presDist)]]
   
-plot(<your code here>)
-text(<your code here>)
+plot(mds,type='n')
+text(labels=levels(speechesDF$inital),col=col)
 
 ### Use hierarchical clustering to produce a visualization of  the results.
 # Compare the two plots.
@@ -276,7 +277,11 @@ plot(hc)
 # x-axis: speech year, y-axis: average sentence length (word/sent)
 
 # your plot statements below:
-
+plot(speechesDF$yr,speechesDF$sent)
+plot(speechesDF$yr,speechesDF$words)
+plot(speechesDF$yr,speechesDF$chars)
+plot(speechesDF$yr,speechesDF$chars/speechesDF$words)
+plot(speechesDF$yr,speechesDF$words/speechesDF$sent)
 
 
 
