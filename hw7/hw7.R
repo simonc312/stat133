@@ -1,5 +1,5 @@
 ######################################################
-##### Homework 7 due Wedensday Nov 26 at noon.
+##### Homework 7 due Wednesday Nov 26 at noon.
 ## Please read through the whole assignment before starting it.
 
 ## For the assingment you will work with the full text of the 
@@ -172,13 +172,13 @@ uniqueWords <- sort(unique(unlist(speechWords)))
 # [1] "a" "b" "c"
 
 # You may want to use an apply statment to first create a list of word vectors, one for each speech.
-speechUniqueWordCountList <-lapply(speechWords,function(speech){table(c(speech,uniqueWords))-1})
+#speechUniqueWordCountList <-lapply(speechWords,function(speech){table(c(speech,uniqueWords))-1})
 # your code to create [wordMat] here:
-wordMat <- matrix(nrow=length(uniqueWords),ncol=n.speeches)
-for(col in 1:n.speeches){
-  wordMat[,col] <- speechUniqueWordCountList[[col]]
-}
-rownames(wordMat) <- uniqueWords
+#wordMat <- matrix(nrow=length(uniqueWords),ncol=n.speeches)
+#for(col in 1:n.speeches){
+#  wordMat[,col] <- speechUniqueWordCountList[[col]]
+#}
+#rownames(wordMat) <- uniqueWords
 # Load the dataframe [speechesDF] which has two variables,
 # president and party affiliation (make sure to keep this line in your code):
 
@@ -208,21 +208,21 @@ speechesDF$month <- speechMo
 # and that colum is the sum of all the columns corresponding to speeches made by said president.
 
 # get the sum of word counts for each president based on all the speeches they gave
-presNames <- levels(speechesDF$Pres)
-presWordList <- lapply(presNames,function(name){
-  sumCount = c()
-  for(index in 1:length(uniqueWords)){
-    row = wordMat[index,speechesDF$Pres == name]
-    sumCount = c(sumCount,sum(row))
-  }
-  return(sumCount)  
-})  
-presidentWordMat <- matrix(ncol=length(presNames),nrow=length(uniqueWords)) 
-for(col in 1:length(presNames)){
-  presidentWordMat[,col] <- presWordList[[col]]
-}
-rownames(presidentWordMat) <- uniqueWords
-colnames(presidentWordMat) <- presNames
+#presNames <- levels(speechesDF$Pres)
+#presWordList <- lapply(presNames,function(name){
+#  sumCount = c()
+#  for(index in 1:length(uniqueWords)){
+#    row = wordMat[index,speechesDF$Pres == name]
+#    sumCount = c(sumCount,sum(row))
+#  }
+#  return(sumCount)  
+#})  
+#presidentWordMat <- matrix(ncol=length(presNames),nrow=length(uniqueWords)) 
+#for(col in 1:length(presNames)){
+#  presidentWordMat[,col] <- presWordList[[col]]
+#}
+#rownames(presidentWordMat) <- uniqueWords
+#colnames(presidentWordMat) <- presNames
 # At the beginning of this file we sourced in a file "computeSJDistance.R"
 # It has the following function:
 # computeSJDistance = (tf, df, terms, logdf = TRUE, verbose = TRUE)
@@ -235,22 +235,22 @@ colnames(presidentWordMat) <- presNames
 # [docFreq]: vector of the same length as [uniqueWords], 
 # count the number of presidents that used the word
 # be sure to check docFreq not all equal count columns with nonzero values for word only 
-  docFreq <- sapply(uniqueWords,function(word){length(which(presidentWordMat[word,] != 0))})
+# docFreq <- sapply(uniqueWords,function(word){length(which(presidentWordMat[word,] != 0))})
     
 # Call the function computeSJDistance() with the arguments
 # presidentWordMat, docFreq and uniqueWords
 # and save the return value in the matrix [presDist]
 
-presDist <- computeSJDistance(wordMat,docFreq ,uniqueWords,logdf = TRUE, verbose = TRUE)
+#presDist <- computeSJDistance(wordMat,docFreq ,uniqueWords,logdf = TRUE, verbose = TRUE)
 
 ## Visualize the distance matrix using multidimensional scaling.
 # Call the function cmdscale() with presDist as input.
 # Store the result in the variable [mds] by 
 
-mds <- cmdscale(presDist)
+#mds <- cmdscale(presDist)
 
 # First do a simple plot the results:
-plot(mds)
+#plot(mds)
 
 # Customize this plot by:
 # -- remove x and y labels and put the title "Presidents" on the plot
@@ -262,26 +262,26 @@ plot(mds)
 # Hint: the info is in speechesDF$party and speechesDF$Pres
 
 
-presParty <- sapply(presNames,function(pres){speechesDF$party[speechesDF$Pres==pres][1]})
-names(presParty) <- presNames
+#presParty <- sapply(presNames,function(pres){speechesDF$party[speechesDF$Pres==pres][1]})
+#names(presParty) <- presNames
 # use rainbow() to pick one unique color for each party (there are 6 parties)
 
-cols <- rainbow(6)
+#cols <- rainbow(6)
 
 # Now we are ready to plot again.
 # First plot mds by calling plot() with type='n' (it will create the axes but not plot the points)
 # you set the title and axes labels in the call to plot()
 # then call text() with the presidents' names as labels and the color argument
-rownames(presDist) <- speechesDF$Pres 
-col = cols[presParty[rownames(presDist)]]
+#rownames(presDist) <- speechesDF$Pres 
+#col = cols[presParty[rownames(presDist)]]
   
-plot(mds,type='n')
-text(mds,labels=levels(speechesDF$initial),col=col,cex=0.5)
-legend(0.3,-0.05,col=cols,pch='o',legend=levels(speechesDF$party),cex=0.5)
+#plot(mds,type='n')
+#text(mds,labels=levels(speechesDF$initial),col=col,cex=0.5)
+#legend(0.3,-0.05,col=cols,pch='o',legend=levels(speechesDF$party),cex=0.5)
 ### Use hierarchical clustering to produce a visualization of  the results.
 # Compare the two plots.
-hc = hclust(as.dist(presDist))
-plot(hc, cex=0.5)
+#hc = hclust(as.dist(presDist))
+#plot(hc, cex=0.5)
 
 ## Final part 
 # Use the data in the dataframe speechesDF to create the plots:
@@ -292,11 +292,11 @@ plot(hc, cex=0.5)
 # x-axis: speech year, y-axis: average sentence length (word/sent)
 
 # your plot statements below:
-plot(speechesDF$yr,speechesDF$sent,col=col,xlab="Year",ylab="Sentence Count")
-plot(speechesDF$yr,speechesDF$words,col=col,xlab="Year",ylab="Word Count")
-plot(speechesDF$yr,speechesDF$chars,col=col,xlab="Year",ylab="Character Count")
-plot(speechesDF$yr,speechesDF$chars/speechesDF$words,col=col,xlab="Year",ylab="Average Word Length")
-plot(speechesDF$yr,speechesDF$words/speechesDF$sent,col=col,xlab="Year",ylab="Average Sentence Length")
+#plot(speechesDF$yr,speechesDF$sent,col=col,xlab="Year",ylab="Sentence Count")
+#plot(speechesDF$yr,speechesDF$words,col=col,xlab="Year",ylab="Word Count")
+#plot(speechesDF$yr,speechesDF$chars,col=col,xlab="Year",ylab="Character Count")
+#plot(speechesDF$yr,speechesDF$chars/speechesDF$words,col=col,xlab="Year",ylab="Average Word Length")
+#plot(speechesDF$yr,speechesDF$words/speechesDF$sent,col=col,xlab="Year",ylab="Average Sentence Length")
 
 
 
