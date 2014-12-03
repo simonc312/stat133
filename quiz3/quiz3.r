@@ -1,3 +1,4 @@
+here = T
 # Quiz 3
 # Number of Problems: 6
 # The quiz is out of 22 points.
