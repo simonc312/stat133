@@ -12,8 +12,9 @@
 #   <num.at>: an integer indicating how many elements of <chvec> contain the "@"
 #     symbol. For example: numAtElements(c('karl', 'k@rl', '@@@')) should return 2
 numAtElements <- function(chvec){
-  
-  # your code here
+  num.match = grepl('@',chvec)
+  num.at = length(num.match[num.match == T])
+  return(num.at)
 }
 
 # Function 2 (3 points)
@@ -25,8 +26,7 @@ numAtElements <- function(chvec){
 #   <newstring>: a character vector of length 1 where all ! symbols have been
 #     replaced by . symbols
 unexclaim <- function(chstring) {
-  
-  # your code here
+  return(gsub('!','.',chstring))
 }
 
 # Function 3 (3 points)
@@ -42,8 +42,12 @@ unexclaim <- function(chstring) {
 #     updated. For example updateDate(c('May, 2010', 'June, 2011'), '2010') should
 #     return 'May, 2015'.
 updateDate <- function(dates, old.yr) {
-  
-  # your code here
+  sapply(dates,USE.NAMES=FALSE,function(date){
+    d = date
+    if(grepl(old.yr,date))
+      d = gsub(old.yr,'2015',date)
+    return(d)
+    })
 }
 
 # Function 4 (4 points)
@@ -59,8 +63,11 @@ updateDate <- function(dates, old.yr) {
 #                    cat dog
 #                     3   1
 countcatdog<- function(chvec){
-  
-  # your code here
+  num.cat = strsplit(gsub('cat',' c ',toLower(chvec)))
+  num.dog = gsub('dog',' d ',toLower(chvec))
+  count = c(num.cat,num.dog)
+  names(count) = c("cat","dog")
+  return(count)
 }
 
 # Function 5 (3 points)
@@ -71,9 +78,9 @@ countcatdog<- function(chvec){
 #
 # and return the following
 #   <total>: A single number (the sum of all the digits in chvec)
+library(stringr)
 sumDigits <- function(chvec){
-
-  # your code here
+  sum(sapply(str_extract_all(chvec,'[[:digit:]]'),as.numeric))
 }
 
 # Some test cases:
@@ -110,6 +117,16 @@ sumDigits <- function(chvec){
 dnaTransform <- function(DNA.vec){
     
   # your code here
+  #STEP1
+  DNA1 = DNA.vec[which(grepl("ATTA",DNA.vec)==T)][1]
+  DNA2 = DNA.vec[which(grepl("ATTA",DNA.vec)==T)][2]
+  if((class(DNA1) != "character") || (class(DNA2)  != "character"))
+    return(c(DNA.vec[1:2]))
+  half1 = substr(DNA1,0,5)
+  half2 = substr(DNA1,6,10)
+  half3 = substr(DNA2,0,5)
+  half4 = substr(DNA2,6,10)
+  return(c(paste(half1,half4,sep=""),paste(half3,half2,sep="")))
 }
 
 # Some test cases:
