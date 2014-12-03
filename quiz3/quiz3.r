@@ -64,8 +64,8 @@ updateDate <- function(dates, old.yr) {
 #                    cat dog
 #                     3   1
 countcatdog<- function(chvec){
-  num.cat = length(str_extract_all('cat',tolower(chvec)))
-  num.dog = length(str_extract_all('dog',tolower(chvec)))
+  num.cat = str_count(tolower(chvec),'cat')
+  num.dog = str_count(tolower(chvec),'dog')
   count = c(num.cat,num.dog)
   names(count) = c("cat","dog")
   return(count)
