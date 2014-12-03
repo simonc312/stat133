@@ -11,6 +11,7 @@
 # and return the following
 #   <num.at>: an integer indicating how many elements of <chvec> contain the "@"
 #     symbol. For example: numAtElements(c('karl', 'k@rl', '@@@')) should return 2
+library(stringr)
 numAtElements <- function(chvec){
   num.match = grepl('@',chvec)
   num.at = length(num.match[num.match == T])
@@ -63,8 +64,8 @@ updateDate <- function(dates, old.yr) {
 #                    cat dog
 #                     3   1
 countcatdog<- function(chvec){
-  num.cat = strsplit(gsub('cat',' c ',toLower(chvec)))
-  num.dog = gsub('dog',' d ',toLower(chvec))
+  num.cat = length(str_extract_all('cat',tolower(chvec)))
+  num.dog = length(str_extract_all('dog',tolower(chvec)))
   count = c(num.cat,num.dog)
   names(count) = c("cat","dog")
   return(count)
@@ -78,7 +79,7 @@ countcatdog<- function(chvec){
 #
 # and return the following
 #   <total>: A single number (the sum of all the digits in chvec)
-library(stringr)
+
 sumDigits <- function(chvec){
   sum(sapply(str_extract_all(chvec,'[[:digit:]]'),as.numeric))
 }
