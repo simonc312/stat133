@@ -122,7 +122,7 @@ dnaTransform <- function(DNA.vec){
   #STEP1
   DNA1 = DNA.vec[which(grepl("ATTA",DNA.vec)==T)][1]
   DNA2 = DNA.vec[which(grepl("ATTA",DNA.vec)==T)][2]
-  if((class(DNA1) != "character") || (class(DNA2)  != "character"))
+  if(is.na(DNA1) || is.na(DNA2))
     return(c(DNA.vec[1:2]))
   half1 = substr(DNA1,0,5)
   half2 = substr(DNA1,6,10)
