@@ -9,7 +9,7 @@ errMsg <- function(err) print(err)
 # Returns the number of factor vectors in the dataframe.
 
 num.factors = function(d) {
-    # your code here
+    sum(sapply(names(d),function(name){if(is.factor(d[[name]])){1}else{0}}))
 }
 
 
@@ -30,7 +30,7 @@ tryCatch(checkEquals(2, num.factors(second)),
 # list.
 
 num.factors2 = function(l) {
-    # your code here
+    sum(sapply(l,num.factors))
 }
 
 
@@ -56,7 +56,7 @@ tryCatch(checkEquals(4, num.factors2(list2)),
 # x*y otherwise
 
 sum.or.product = function(x, y=10) {
-    #your code here
+    ifelse(x>y,x+y,x*y)
 }
 
 
@@ -85,7 +85,7 @@ tryCatch(checkEquals(x+y, sum.or.product(x,y)),
 #     FALSE when the number is odd
 
 odd = function(x, flip=FALSE) {
-    # your code here
+    ifelse(rep(flip,length(x)),x %%2 == 0, x %%2 == 1)
 }
 
 
@@ -109,7 +109,7 @@ tryCatch(checkEquals(!os, odd(xs, flip=TRUE)),
 # computation of the return value.
 
 sum.adm = function(x, na.rm=FALSE){
-    # your code ehre
+    sum(abs(x - median(x,na.rm = na.rm)),na.rm = na.rm)
 }
 
 

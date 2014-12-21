@@ -19,8 +19,7 @@ load("ex3.rda")
 # strictly greater than the 'threshold'.
 
 too.many.na = function(df, threshold, axis) {
-    # your code here
-
+    return(unname(which(apply(df,axis,function(e){sum(sapply(e,is.na))/length(e) > threshold}) == TRUE,useNames = FALSE)))
 }
 
 
@@ -51,8 +50,13 @@ tryCatch(checkEquals(0, length(too.many.na(testdf1, 0.6, 1))),
 #    Q3 is the third quartile or the 75th percentile
 #    IQR is the difference Q3 - Q1
 
-outlier.cutoff = function(x, rm.na){
-    # your code here
+outlier.cutoff = function(x, rm.na=FALSE){
+  x_na = x
+  if(rm.na)
+    x_na = na.omit(x)
+  lower_cutoff = quantile(x_na,c(.25)) - 2.5*IQR(x_na)
+  upper_cutoff = quantile(x_na,c(.75)) + 2.5*IQR(x_na)
+    return(c(lower_cutoff,upper_cutoff))
 
 }
 
@@ -86,33 +90,36 @@ tryCatch(checkEquals(cuts, unname(outlier.cutoff(x, TRUE)), tolerance=1e-6),
 # any lower bound)
 
 remove.outliers = function(df, cuts) {
-
+  rows_to_keep = which(apply(df,1,function(row){
+    any( (row > cuts[1] & row < cuts[2]) == FALSE) #if no outliers it should return FALSE
+  }) == FALSE)
+  return(df[rows_to_keep,])
 }  
 
 # Create a vector na.indices. This is a vector containing the rows of df with
 # any NAs.
 
-# na.indices = your code here
+na.indices = which(apply(df,1,function(r){any(is.na(r))}))
 
 
 # Create a dataframe df.no.nas. This should be a subset of df with all rows
 # containing any NAs removed.
 
-# df.no.nas = your code here
+df.no.nas = na.omit(df)
 
 
 # Create a matrix cuts. Each column of cuts should be the result of calling
 # outlier.cutoff on the corresponding column of df.no.nas. You can set rm.na to
 # TRUE or FALSE since df.no.nas shouldn't have any NAs.
 
-# cuts = your code here
+cuts = apply(df.no.nas,2,outlier.cutoff)
 
 
 # Create a dataframe df.clean. This is a subset of df with all rows containing
 # any NAs removed as well as any rows with elements outside the cutoffs
 # specified by cuts removed.
 
-# df.clean = your code here
+df.clean = remove.outliers(df.no.nas,cuts)
 
 
 
